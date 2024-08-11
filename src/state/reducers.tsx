@@ -1,5 +1,6 @@
 import initialState, { IAppState } from "./intial_state";
 import {
+  SET_MAP_MODE,
   SET_MODE,
   ADD_SINGLE_POINT,
   SET_SINGLE_POINT_NOTE,
@@ -17,6 +18,7 @@ import {
 import { TMode } from './intial_state';
 import { TPoint } from '../components/Point';
 import { TTrajectory } from "../components/Trajectory";
+import { TMapMode } from "../components/Map";
 
 interface IAction<T> {
   payload: T
@@ -31,6 +33,8 @@ export function appReducer(state:IAppState = initialState, action:any) {
   switch(action.type) {
     case LOAD:
       return loadReducer(state, action);
+    case SET_MAP_MODE:
+      return setMapMode(state, action);
     case SET_MODE:
       return setModeReducer(state, action);
     case ADD_SINGLE_POINT:
@@ -68,6 +72,14 @@ function loadReducer(state:IAppState, { payload: { points, trajectories }}: IAct
     ...state,
     points,
     trajectories
+  };
+}
+
+// SET_MAP_MODE
+function setMapMode(state:IAppState, { payload: mapMode }:IAction<TMapMode>) {
+  return {
+    ...state,
+    mapMode
   };
 }
 

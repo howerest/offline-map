@@ -1,7 +1,7 @@
 import react from "react";
 import "./index.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_MODE, SET_START_RESETTING, SET_START_SAVING } from "../../state/actions";
+import { SET_MAP_MODE, SET_MODE, SET_START_RESETTING, SET_START_SAVING } from "../../state/actions";
 import { IAppState } from "../../state/intial_state";
 
 export default function Controls() {
@@ -13,6 +13,12 @@ export default function Controls() {
       <div className="Controls">
         <h3 className="Controls__title">My map</h3>
         <div className="Controls__groups">
+          <div className="">
+            <h3>Map Mode</h3>
+            <select onChange={(e) => dispatch({ type: SET_MAP_MODE, payload: e.target.value })}>
+              {["online", "offline-png", "offline-mbtiles"].map(o => <option value={o}>{o}</option>)}
+            </select>
+          </div>
           <div className={
             `Controls__groups__Point ${mode === "ADDING_SINGLE_POINT" ? `Controls__groups__Point--current` : ''}`
           }>

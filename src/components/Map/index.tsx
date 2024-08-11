@@ -9,26 +9,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IAppState } from "../../state/intial_state";
 import { ADD_POINT_TO_TRAJECTORY, ADD_SINGLE_POINT } from "../../state/actions";
 
+export type TMapMode = "online" | "offline-png" | "offline-mbtiles";
 interface IProps {
-  mapMode: "online" | "offline-png" | "offline-mbtiles";
+  mapMode: TMapMode;
 }
 
-export default function({ mapMode }: IProps) {
-  const {mode, points, trajectories} = useSelector((state:IAppState) => state);
+export default function() {
+  const {mapMode, mode, points, trajectories} = useSelector((state:IAppState) => state);
   const dispatch = useDispatch();
-  const [map, setMap] = useState<boolean | undefined>();
 
   return (
     <>
       <MapContainer
         style={{ height: '100vh', border: '1px solid #555', margin: '15px 0', paddingTop: '30px', position: 'relative' }}
         center={[28.391081, -16.523540]}
-        zoom={9}
+        zoom={8}
         scrollWheelZoom={true}
         dragging={!leaflet.Browser.mobile}
-        whenReady={() => {
-          setMap(true);
-        }}
       >
         <MapEditor
           onAdd={(map:Map, point:TPoint) => {
