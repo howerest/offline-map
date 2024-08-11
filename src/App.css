@@ -1,0 +1,20 @@
+.App {
+  text-align: center;
+}
+
+.App button {
+  border: 1px solid black;
+  border-radius: 2px;
+  margin: 0 4px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
+.App button:disabled {
+  background: #aaa;
+  border: #555;
+}

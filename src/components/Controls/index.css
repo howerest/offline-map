@@ -1,0 +1,25 @@
+.Controls__title {
+  background: black;
+  color: white;
+  margin: 0;
+  padding: 10px;
+}
+
+.Controls__groups {
+  display: flex;
+  text-align: center;
+}
+
+.Controls__groups > div {
+  flex: 1;
+}
+
+.Controls__groups h3 {
+  margin: 8px;
+}
+
+.Controls__groups__Point--current h3,
+.Controls__groups__Trajectory--current h3 {
+  background: red;
+  color: white;
+}
