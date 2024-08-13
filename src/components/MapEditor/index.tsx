@@ -12,7 +12,7 @@ export default function MapEditor(props: IProps) {
   const map = useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
-      props.onAdd(map, [lat, lng])
+      props.onAdd(map, [lat, lng]);
     }
   });
 

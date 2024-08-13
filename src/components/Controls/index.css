@@ -1,3 +1,9 @@
+.Controls {
+  text-align: center;
+  background: #eaeaea;
+  height: 110px;
+}
+
 .Controls__title {
   background: black;
   color: white;

@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useCallback } from "react";
 import "./index.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_MAP_MODE, SET_MODE, SET_START_RESETTING, SET_START_SAVING } from "../../state/actions";
@@ -7,6 +7,16 @@ import { IAppState } from "../../state/intial_state";
 export default function Controls() {
   const {mode, points, trajectories} = useSelector((state:IAppState) => state);
   const dispatch = useDispatch();
+
+  const exportData = useCallback(() => {
+    const data = `data:text/json;charset=utf-8, ${encodeURIComponent(JSON.stringify({ points, trajectories }))}`;
+    const linkNode = document.createElement('a');
+    linkNode.setAttribute("href", data);
+    linkNode.setAttribute("download", `${(new Date().toISOString())}.json`);
+    document.body.appendChild(linkNode);
+    linkNode.click();
+    linkNode.remove();
+  }, []);
 
   return (
     <div>
@@ -56,6 +66,9 @@ export default function Controls() {
             </button>
             <button onClick={() => dispatch({ type: SET_START_RESETTING })}>
               Reset
+            </button>
+            <button onClick={exportData}>
+              Export
             </button>
           </div>
         </div>

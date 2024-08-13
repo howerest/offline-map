@@ -1,0 +1,5 @@
+.MapContainer {
+  height: calc(100vh - 110px);
+  border: 1px solid #555;
+  position: relative;
+}

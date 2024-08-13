@@ -3,10 +3,12 @@ import {
   SET_MAP_MODE,
   SET_MODE,
   ADD_SINGLE_POINT,
+  SET_SINGLE_POINT_NAME,
   SET_SINGLE_POINT_NOTE,
   SELECT_TRAJECTORY,
   SELECT_TRAJECTORY_POINT,
   ADD_POINT_TO_TRAJECTORY,
+  SET_TRAJECTORY_NAME,
   SET_START_RESETTING,
   SET_RESETED,
   SET_START_SAVING,
@@ -47,6 +49,8 @@ export function appReducer(state:IAppState = initialState, action:any) {
       return selectTrajectoryPointReducer(state, action);
     case ADD_POINT_TO_TRAJECTORY:
       return addPointToTrajectoryReducer(state, action);
+    case SET_TRAJECTORY_NAME:
+      return setTrajectoryName(state, action);
     case SET_START_RESETTING:
       return setStartResettingReducer(state);
     case SET_RESETED:
@@ -87,12 +91,12 @@ function setMapMode(state:IAppState, { payload: mapMode }:IAction<TMapMode>) {
 function setModeReducer(state:IAppState, { payload: mode }:IAction<TMode>): IAppState {
   const newState = {...state};
   if (mode === "ADDING_TRAJECTORY_POINT") {
-    newState.trajectories.push({
+    newState.trajectories.unshift({
       name: 'trajectory',
       color: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`,
       points: [],
     });
-    newState.selectedTrajectory = newState.trajectories.length-1;
+    newState.selectedTrajectory = 0;
   }
   newState.mode = mode;
   return newState;
@@ -140,6 +144,16 @@ function addPointToTrajectoryReducer(state:IAppState, { payload: point }:IAction
   newTrajectories[state.selectedTrajectory as number].points.push(point);
   return {
     ...state,
+    trajectories: newTrajectories
+  };
+}
+
+// SET_TRAJECTORY_NAME
+function setTrajectoryName(state:IAppState, { payload: { index, name } }:IAction<{ index: number; name: string}>): IAppState {
+  let newTrajectories = [...state.trajectories];
+  newTrajectories[index].name = name;
+  return {
+    ...initialState,
     trajectories: newTrajectories
   };
 }

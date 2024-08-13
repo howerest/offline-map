@@ -8,6 +8,7 @@ import Trajectory from "../Trajectory";
 import { useSelector, useDispatch } from 'react-redux';
 import { IAppState } from "../../state/intial_state";
 import { ADD_POINT_TO_TRAJECTORY, ADD_SINGLE_POINT } from "../../state/actions";
+import "./index.css";
 
 export type TMapMode = "online" | "offline-png" | "offline-mbtiles";
 interface IProps {
@@ -21,7 +22,7 @@ export default function() {
   return (
     <>
       <MapContainer
-        style={{ height: '100vh', border: '1px solid #555', margin: '15px 0', paddingTop: '30px', position: 'relative' }}
+        className="MapContainer"
         center={[28.391081, -16.523540]}
         zoom={8}
         scrollWheelZoom={true}

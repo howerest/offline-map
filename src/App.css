@@ -1,5 +1,31 @@
 .App {
-  text-align: center;
+  background: #eaeaea;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .App {
+    display: none;
+  }
+}
+
+.App__grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.App__grid__controls-panel {
+  flex-basis: 100%;
+}
+
+.App__grid__panel {
+  flex-basis: 30%;
+}
+
+.App__grid__map-container {
+  flex-basis: 70%;
+  position: relative;
 }
 
 .App button {
