@@ -18,7 +18,10 @@ Map has 3 modes:
 * [ ] Be able to select a point
 * [ ] Be able to select a trajectory
 * [ ] Be able to select a point in a trajectory
-* [ ] Be able to export points and trajectories in csv format
+* [x] Be able to put a name to a trajectory
+* [x] Be able to export points and trajectories in json format
+* [ ] Be able to import points and trajectories in json format
+
 
 ### How to use it
 
