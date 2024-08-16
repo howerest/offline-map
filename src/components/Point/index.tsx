@@ -12,7 +12,7 @@ export default function Point({ point }: IProps) {
     <Circle
       center={point}
       pathOptions={{ fillColor: 'red' }}
-      radius={150}
+      radius={10}
     >
       <Popup>
         Lat: <b>{point[0]}</b> <br />Lon <b>{point[1]}</b> <br /> Notes: -
