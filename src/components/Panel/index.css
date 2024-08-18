@@ -5,10 +5,10 @@
   overflow-y: scroll;
 }
 
-.Panel__Trajectories__trajectory {
+.Panel__trajectories__trajectory,
+.Panel__points__point {
   font-family: monospace;
   padding: 10px;
-  width: 90%;
   margin: 0 auto;
   border-radius: 10px;
   background: white;
@@ -16,23 +16,68 @@
   margin-bottom: 20px;
 }
 
-.Panel__Trajectories__trajectory ul {
-  padding-left: 20px;
+.Panel__trajectories__empty,
+.Panel__points__empty {
+  background: white;
+  padding: 10px;
+  text-align: center;
+  min-height: 100px;
+  display: grid;
+  align-items: center;
 }
 
-.Panel__Trajectories__trajectory li {
+.Panel__trajectories {
+  margin-bottom: 50px;
+}
+
+.Panel__trajectories ul,
+.Panel__points ul {
+  padding-left: 0;
+}
+
+.Panel__trajectories li,
+.Panel__points li {
   list-style: none;
 }
 
-.Panel__Trajectories__trajectory input {
+.Panel__points li span {
+  display: block;
+}
+
+.Panel__trajectories li {
+  border-left: 1px solid black;
+  padding-left: 10px;
+  margin-left: 10px;
+  position: relative;
+}
+
+.Panel__trajectories li:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.Panel__trajectories__trajectory span,
+.Panel__points__point span {
+  margin-left: 10px;
+}
+
+.Panel__trajectories__trajectory input,
+.Panel__points__point input {
   font-weight: 600;
   padding: 4px 6px;
   background: white;
-  border: 1px solid white;
+  border: 1px solid #333;
   width: calc(100% - 14px);
 }
 
-.Panel__Trajectories__trajectory input:hover {
-  border-color: #333;
+.Panel__trajectories__trajectory input:hover,
+.Panel__points__point input:hover {
   background: white;
 }

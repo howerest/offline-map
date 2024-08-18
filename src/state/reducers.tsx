@@ -1,7 +1,8 @@
-import initialState, { IAppState } from "./intial_state";
+import initialState, { IAppState, INamedPoint, TPoint, TTrajectory } from "./intial_state";
 import {
   SET_MAP_MODE,
   SET_MODE,
+  SET_POINT_RADIUS,
   ADD_SINGLE_POINT,
   SET_SINGLE_POINT_NAME,
   SET_SINGLE_POINT_NOTE,
@@ -18,8 +19,6 @@ import {
   LOAD
 } from './actions';
 import { TMode } from './intial_state';
-import { TPoint } from '../components/Point';
-import { TTrajectory } from "../components/Trajectory";
 import { TMapMode } from "../components/Map";
 
 interface IAction<T> {
@@ -39,8 +38,12 @@ export function appReducer(state:IAppState = initialState, action:any) {
       return setMapMode(state, action);
     case SET_MODE:
       return setModeReducer(state, action);
+    case SET_POINT_RADIUS:
+      return setPointRadius(state, action);
     case ADD_SINGLE_POINT:
       return setAddSinglePointReducer(state, action);
+    case SET_SINGLE_POINT_NAME:
+      return setSinglePointName(state, action);
     case SET_SINGLE_POINT_NOTE:
       return setSinglePointNoteReducer(state, action);
     case SELECT_TRAJECTORY:
@@ -69,7 +72,7 @@ export function appReducer(state:IAppState = initialState, action:any) {
 
 // LOAD
 function loadReducer(state:IAppState, { payload: { points, trajectories }}: IAction<{
-  points: TPoint[];
+  points: INamedPoint[];
   trajectories: TTrajectory[];
 }>) {
   return {
@@ -92,19 +95,50 @@ function setModeReducer(state:IAppState, { payload: mode }:IAction<TMode>): IApp
   const newState = {...state};
   if (mode === "ADDING_TRAJECTORY_POINT") {
     newState.trajectories.unshift({
-      name: 'trajectory',
+      name: `trajectory ${state.trajectories.length}`,
       color: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`,
       points: [],
     });
     newState.selectedTrajectory = 0;
+  } else
+  if (mode === "ADDING_SINGLE_POINT") {
+    newState.selectedTrajectory = null;
+    if (state.mode === "ADDING_TRAJECTORY_POINT") {
+      // remove current trajectory if it doesn't have any point 
+      if (state.selectedTrajectory !== null && state.trajectories[state.selectedTrajectory].points.length === 0) {
+        newState.trajectories.splice(state.selectedTrajectory, 1);
+      } 
+    }
   }
   newState.mode = mode;
   return newState;
 };
 
+// SET_POINT_RADIUS
+function setPointRadius(state:IAppState, { payload: radius }:IAction<number>): IAppState {
+  return {
+    ...state,
+    pointRadiusMeters: radius
+  };
+};
+
 // ADD_SINGLE_POINT
-function setAddSinglePointReducer(state:IAppState, { payload: point }:IAction<TPoint>): IAppState {
-  const newPoints = [...state.points, point];
+function setAddSinglePointReducer(state:IAppState, { payload: {...point} }:IAction<INamedPoint>): IAppState {
+  const newState = {...state};
+  newState.points = [
+    {
+      name: `point ${state.points.length}`,
+      point: point.point
+    },
+    ...state.points
+  ];
+  return newState;
+}
+
+// SET_SINGLE_POINT_NAME
+function setSinglePointName(state:IAppState, { payload: { index, name } }:IAction<{ index: number; name: string}>): IAppState {
+  let newPoints = [...state.points];
+  newPoints[index].name = name;
   return {
     ...state,
     points: newPoints
@@ -153,7 +187,7 @@ function setTrajectoryName(state:IAppState, { payload: { index, name } }:IAction
   let newTrajectories = [...state.trajectories];
   newTrajectories[index].name = name;
   return {
-    ...initialState,
+    ...state,
     trajectories: newTrajectories
   };
 }

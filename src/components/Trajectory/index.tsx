@@ -1,12 +1,7 @@
 import React from "react";
-import Point, { TPoint } from "../Point";
+import Point from "../Point";
 import { Polyline } from "react-leaflet";
-
-export type TTrajectory = {
-  name: string;
-  color: string;
-  points: TPoint[];
-} 
+import { TTrajectory } from "../../state/intial_state";
 
 interface IProps {
   trajectory: TTrajectory;
@@ -17,7 +12,7 @@ export default function Trajectory({trajectory}: IProps) {
     <>
       {trajectory.points.map((point, i) => (
         <React.Fragment key={i}>
-          <Point point={point} />
+          <Point point={{ name: '', point }} />
           {i !== 0 && (
             <Polyline
               positions={[

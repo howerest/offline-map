@@ -1,11 +1,11 @@
 import React from "react";
 import { useMapEvents } from "react-leaflet";
-import { TPoint } from "../Point";
 import { Map } from "leaflet";
+import { TPoint } from "../../state/intial_state";
 
-type TOnAddCallback = (map:Map, point:TPoint) => void;
 interface IProps {
-  onAdd: TOnAddCallback
+  onAdd: (map:Map, point:TPoint) => void;
+  onZoom: (zoomValue:number) => void
 }
 
 export default function MapEditor(props: IProps) {
@@ -13,7 +13,10 @@ export default function MapEditor(props: IProps) {
     click: (e) => {
       const { lat, lng } = e.latlng;
       props.onAdd(map, [lat, lng]);
-    }
+    },
+    zoomend: () => {
+      props.onZoom(map.getZoom());
+    },
   });
 
   return <></>

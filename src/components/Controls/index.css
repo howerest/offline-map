@@ -16,6 +16,20 @@
   text-align: center;
 }
 
+.Controls__groups__map-mode select {
+  display: block;
+  line-height: 1.5em;
+  border: 1px solid black;
+  height: 30px;
+  font-size: 20px;
+  margin: 15px;
+  padding: 0 10px;
+}
+
+.Controls__groups__map-mode select::selection {
+  border: 1px solid black;
+}
+
 .Controls__groups > div {
   flex: 1;
 }
@@ -26,6 +40,22 @@
 
 .Controls__groups__Point--current h3,
 .Controls__groups__Trajectory--current h3 {
-  background: red;
+  background: #1e01bf;
+  line-height: 1.4em;
   color: white;
+}
+
+.Controls__groups__data {
+  display: flex;
+}
+
+.Controls__groups__data button {
+  background: #828282;
+  border: none;
+  flex: 1;
+  margin: 8px;
+}
+
+.Controls__groups__data button:hover {
+  background: black;
 }

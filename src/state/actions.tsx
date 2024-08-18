@@ -6,6 +6,7 @@
 export const SET_MAP_MODE = 'SET_MAP_MODE';
 export const SET_MODE = 'SET_MODE';
 export const LOAD = 'LOAD';
+export const SET_POINT_RADIUS = 'SET_POINT_RADIUS';
 
 // Single points
 export const ADD_SINGLE_POINT = 'ADD_SINGLE_POINT';

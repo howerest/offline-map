@@ -20,11 +20,11 @@
 }
 
 .App__grid__panel {
-  flex-basis: 30%;
+  flex-basis: 23%;
 }
 
 .App__grid__map-container {
-  flex-basis: 70%;
+  flex-basis: 77%;
   position: relative;
 }
 
