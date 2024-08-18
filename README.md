@@ -2,6 +2,8 @@
 
 This software allows you to render a map, add points and trajectories with notes, save them in the browser local storage or export them in csv.
 
+![UI Preview](https://github.com/howerest/offline-map/raw/main/screenshot.png)
+
 Map has 3 modes:
 
 * `offline-mbtiles`: The default mode that uses the world .mbtiles map (offline)
