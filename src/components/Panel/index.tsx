@@ -40,7 +40,12 @@ export default function Panel() {
       <div className="Panel__tabs">
         <button
           className={`Panel__tab ${activeTab === "points" ? 'Panel__tab--active' : ''}`}
-          onClick={() => setActiveTab("points")}
+          onClick={() => {
+            if (mode === "ADDING_TRAJECTORY_POINT") {
+              dispatch({ type: SET_MODE, payload: "ADDING_SINGLE_POINT" });
+            }
+            setActiveTab("points");
+          }}
         >
           Points ({points.length})
         </button>
