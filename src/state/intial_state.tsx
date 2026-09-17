@@ -7,13 +7,15 @@ export type TPoint = [number, number];
 export interface INamedPoint {
   name: string;
   point: TPoint;
+  note?: string;
 }
 
 export type TTrajectory = {
   name: string;
   color: string;
   points: TPoint[];
-} 
+  note?: string;
+}
 
 export interface IAppState {
   mapMode: TMapMode;

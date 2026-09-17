@@ -16,7 +16,7 @@ export default function Point({ point }: IProps) {
       radius={pointRadiusMeters}
     >
       <Popup>
-        Lat: <b>{point.point[0]}</b> <br />Lon <b>{point.point[1]}</b> <br /> Notes: -
+        Lat: <b>{point.point[0]}</b> <br />Lon <b>{point.point[1]}</b> <br /> Notes: {point.note || '-'}
       </Popup>
     </Circle>
   );

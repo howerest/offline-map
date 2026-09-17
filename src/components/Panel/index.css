@@ -81,3 +81,15 @@
 .Panel__points__point input:hover {
   background: white;
 }
+
+.Panel__trajectories__trajectory__note,
+.Panel__points__point__note {
+  display: block;
+  margin: 10px 0 0;
+  padding: 4px 6px;
+  width: calc(100% - 14px);
+  font-family: monospace;
+  border: 1px solid #333;
+  resize: vertical;
+  min-height: 40px;
+}

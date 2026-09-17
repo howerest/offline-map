@@ -10,6 +10,7 @@ import {
   SELECT_TRAJECTORY_POINT,
   ADD_POINT_TO_TRAJECTORY,
   SET_TRAJECTORY_NAME,
+  SET_TRAJECTORY_NOTES,
   SET_START_RESETTING,
   SET_RESETED,
   SET_START_SAVING,
@@ -54,6 +55,8 @@ export function appReducer(state:IAppState = initialState, action:any) {
       return addPointToTrajectoryReducer(state, action);
     case SET_TRAJECTORY_NAME:
       return setTrajectoryName(state, action);
+    case SET_TRAJECTORY_NOTES:
+      return setTrajectoryNotes(state, action);
     case SET_START_RESETTING:
       return setStartResettingReducer(state);
     case SET_RESETED:
@@ -146,14 +149,13 @@ function setSinglePointName(state:IAppState, { payload: { index, name } }:IActio
 }
 
 // SET_SINGLE_POINT_NOTE
-function setSinglePointNoteReducer(state:IAppState, { payload: note }:IAction<string>): IAppState {
-  return state;
-  // const newPoints = [...state.points];
-  // newPoints[state.selectedPoint as number]['notes'] = note;
-  // return {
-  //   ...state,
-  //   points: newPoints
-  // };
+function setSinglePointNoteReducer(state:IAppState, { payload: { index, note } }:IAction<{ index: number; note: string}>): IAppState {
+  const newPoints = [...state.points];
+  newPoints[index] = { ...newPoints[index], note };
+  return {
+    ...state,
+    points: newPoints
+  };
 };
 
 // SELECT_TRAJECTORY
@@ -186,6 +188,16 @@ function addPointToTrajectoryReducer(state:IAppState, { payload: point }:IAction
 function setTrajectoryName(state:IAppState, { payload: { index, name } }:IAction<{ index: number; name: string}>): IAppState {
   let newTrajectories = [...state.trajectories];
   newTrajectories[index].name = name;
+  return {
+    ...state,
+    trajectories: newTrajectories
+  };
+}
+
+// SET_TRAJECTORY_NOTES
+function setTrajectoryNotes(state:IAppState, { payload: { index, note } }:IAction<{ index: number; note: string}>): IAppState {
+  const newTrajectories = [...state.trajectories];
+  newTrajectories[index] = { ...newTrajectories[index], note };
   return {
     ...state,
     trajectories: newTrajectories

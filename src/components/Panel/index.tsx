@@ -2,7 +2,7 @@ import react, { useCallback } from "react";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppState } from "../../state/intial_state";
-import { SET_SINGLE_POINT_NAME, SET_TRAJECTORY_NAME } from "../../state/actions";
+import { SET_SINGLE_POINT_NAME, SET_SINGLE_POINT_NOTE, SET_TRAJECTORY_NAME, SET_TRAJECTORY_NOTES } from "../../state/actions";
 
 export default function Panel() {
   const {points, trajectories} = useSelector((state:IAppState) => state);
@@ -23,6 +23,18 @@ export default function Panel() {
                 payload: {
                   index: i,
                   name: e.target.value
+                }
+              })}
+            />
+            <textarea
+              className="Panel__trajectories__trajectory__note"
+              placeholder="Add a note..."
+              value={trajectory.note || ''}
+              onChange={(e) => dispatch({
+                type: SET_TRAJECTORY_NOTES,
+                payload: {
+                  index: i,
+                  note: e.target.value
                 }
               })}
             />
@@ -57,6 +69,18 @@ export default function Panel() {
                 })}
               />
               <span>[{point.point[0]}, {point.point[1]}]</span>
+              <textarea
+                className="Panel__points__point__note"
+                placeholder="Add a note..."
+                value={point.note || ''}
+                onChange={(e) => dispatch({
+                  type: SET_SINGLE_POINT_NOTE,
+                  payload: {
+                    index: i,
+                    note: e.target.value
+                  }
+                })}
+              />
             </li>
           ))}
         </ul>

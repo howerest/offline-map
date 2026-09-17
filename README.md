@@ -16,7 +16,8 @@ Map has 3 modes:
 * [x] Be able to add a trajectory with multiple points
 * [x] Be able to save the points and trajectories in the local storage
 * [x] Be able to reset the state of points and trajectories
-* [ ] Be able to add a note to a single point
+* [x] Be able to add a note to a single point
+* [x] Be able to add a note to a trajectory
 * [ ] Be able to select a point
 * [ ] Be able to remove a point
 * [ ] Be able to select a trajectory
