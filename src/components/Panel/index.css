@@ -1,8 +1,48 @@
 .Panel {
   background: #eaeaea;
   padding: 10px;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 42px);
   overflow-y: scroll;
+}
+
+.Panel__map-mode select {
+  display: block;
+  width: 100%;
+  line-height: 1.5em;
+  border: 1px solid black;
+  height: 30px;
+  font-size: 16px;
+  margin: 0 0 15px;
+  padding: 0 10px;
+}
+
+.Panel__tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.Panel__tabs .Panel__tab {
+  flex: 1;
+  background: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 0;
+  margin: 0;
+  padding: 8px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.Panel__tabs .Panel__tab--active {
+  background: #1e01bf;
+  color: white;
+}
+
+.Panel__trajectories .Panel__new-button,
+.Panel__points .Panel__new-button {
+  display: block;
+  width: 100%;
+  margin: 0 0 10px;
 }
 
 .Panel__trajectories__trajectory,

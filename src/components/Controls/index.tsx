@@ -1,11 +1,11 @@
 import react, { useCallback } from "react";
 import "./index.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD, SET_MAP_MODE, SET_MODE, SET_START_RESETTING, SET_START_SAVING } from "../../state/actions";
+import { LOAD, SET_START_RESETTING, SET_START_SAVING } from "../../state/actions";
 import { IAppState } from "../../state/intial_state";
 
 export default function Controls() {
-  const {mode, points, trajectories} = useSelector((state:IAppState) => state);
+  const {points, trajectories} = useSelector((state:IAppState) => state);
   const dispatch = useDispatch();
 
   /**
@@ -84,43 +84,6 @@ export default function Controls() {
             >
               Export
             </button>
-          </div>
-        </div>
-        <div className="Controls__groups">
-          <div className="Controls__groups__map-mode">
-            <select onChange={(e) => dispatch({ type: SET_MAP_MODE, payload: e.target.value })}>
-              {["online", "offline-png", "offline-mbtiles"].map(o => <option value={o}>{o} map</option>)}
-            </select>
-          </div>
-          <div className={
-            `Controls__groups__Point ${mode === "ADDING_SINGLE_POINT" ? `Controls__groups__Point--current` : ''}`
-          }>
-            <h3>Single Points ({points.length})</h3>
-            <button
-              onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_SINGLE_POINT"})}
-              disabled={mode === "ADDING_SINGLE_POINT"}
-            >
-              {mode === "ADDING_SINGLE_POINT" ? 'Click on Map' : 'Start Adding'}
-            </button>
-          </div>
-          <div className={
-            `Controls__groups__Trajectory ${mode === "ADDING_TRAJECTORY_POINT" ? `Controls__groups__Trajectory--current` : ''}`
-          }>
-            <h3>Trajectories ({trajectories.length})</h3>
-            <button
-              onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_TRAJECTORY_POINT"})}
-              disabled={mode === "ADDING_TRAJECTORY_POINT"}
-            >
-              {mode === "ADDING_TRAJECTORY_POINT" ? 'Click on Map' : 'New Trajectory'}
-            </button>
-            {mode === "ADDING_TRAJECTORY_POINT" && (
-              <button
-                onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_SINGLE_POINT"})}
-                disabled={mode !== "ADDING_TRAJECTORY_POINT"}
-              >
-                End Trajectory
-              </button>
-            )}
           </div>
         </div>
       </div>

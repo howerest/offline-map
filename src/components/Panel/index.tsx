@@ -2,7 +2,7 @@ import react, { useCallback, useEffect, useState } from "react";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppState } from "../../state/intial_state";
-import { SET_SINGLE_POINT_NAME, SET_SINGLE_POINT_NOTE, SELECT_SINGLE_POINT, DELETE_SINGLE_POINT, CLEAR_SELECTION, SET_TRAJECTORY_NAME, SET_TRAJECTORY_NOTES, VIEW_TRAJECTORY, DELETE_TRAJECTORY } from "../../state/actions";
+import { SET_MAP_MODE, SET_MODE, SET_SINGLE_POINT_NAME, SET_SINGLE_POINT_NOTE, SELECT_SINGLE_POINT, DELETE_SINGLE_POINT, CLEAR_SELECTION, SET_TRAJECTORY_NAME, SET_TRAJECTORY_NOTES, VIEW_TRAJECTORY, DELETE_TRAJECTORY } from "../../state/actions";
 
 interface IDraft {
   index: number;
@@ -10,11 +10,14 @@ interface IDraft {
   note: string;
 }
 
+type TTab = "points" | "trajectories";
+
 export default function Panel() {
-  const {points, trajectories, selectedPoint, viewedTrajectory} = useSelector((state:IAppState) => state);
+  const {mode, points, trajectories, selectedPoint, viewedTrajectory} = useSelector((state:IAppState) => state);
   const dispatch = useDispatch();
   const [editingPoint, setEditingPoint] = useState<IDraft | null>(null);
   const [editingTrajectory, setEditingTrajectory] = useState<IDraft | null>(null);
+  const [activeTab, setActiveTab] = useState<TTab>("points");
 
   useEffect(() => {
     function handleDocumentClick(e: MouseEvent) {
@@ -29,8 +32,41 @@ export default function Panel() {
 
   return (
     <div className="Panel">
-      <h3>Trajectories</h3>
-      <div className="Panel__trajectories">
+      <div className="Panel__map-mode">
+        <select onChange={(e) => dispatch({ type: SET_MAP_MODE, payload: e.target.value })}>
+          {["online", "offline-png", "offline-mbtiles"].map(o => <option value={o}>{o} map</option>)}
+        </select>
+      </div>
+      <div className="Panel__tabs">
+        <button
+          className={`Panel__tab ${activeTab === "points" ? 'Panel__tab--active' : ''}`}
+          onClick={() => setActiveTab("points")}
+        >
+          Points ({points.length})
+        </button>
+        <button
+          className={`Panel__tab ${activeTab === "trajectories" ? 'Panel__tab--active' : ''}`}
+          onClick={() => setActiveTab("trajectories")}
+        >
+          Trajectories ({trajectories.length})
+        </button>
+      </div>
+      <div className="Panel__trajectories" style={{ display: activeTab === "trajectories" ? undefined : 'none' }}>
+        <button
+          className="Panel__new-button"
+          onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_TRAJECTORY_POINT"})}
+          disabled={mode === "ADDING_TRAJECTORY_POINT"}
+        >
+          {mode === "ADDING_TRAJECTORY_POINT" ? 'Click on Map' : 'New trajectory'}
+        </button>
+        {mode === "ADDING_TRAJECTORY_POINT" && (
+          <button
+            className="Panel__new-button"
+            onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_SINGLE_POINT"})}
+          >
+            End Trajectory
+          </button>
+        )}
         {trajectories.length === 0 &&
           <span className="Panel__points__empty">No trajectories yet</span>
         }
@@ -117,8 +153,14 @@ export default function Panel() {
           );
         })}
       </div>
-      <h3>Single points</h3>
-      <div className="Panel__points">
+      <div className="Panel__points" style={{ display: activeTab === "points" ? undefined : 'none' }}>
+        <button
+          className="Panel__new-button"
+          onClick={() => dispatch({ type: SET_MODE, payload: "ADDING_SINGLE_POINT"})}
+          disabled={mode === "ADDING_SINGLE_POINT"}
+        >
+          {mode === "ADDING_SINGLE_POINT" ? 'Click on Map' : 'New point'}
+        </button>
         {points.length === 0 &&
           <span className="Panel__points__empty">No points yet</span>
         }
