@@ -50,7 +50,42 @@ export default function Controls() {
   return (
     <div>
       <div className="Controls">
-        <h3 className="Controls__title">My map</h3>
+        <div className="Controls__title">
+          <h3 className="Controls__title__text">My map</h3>
+          <div className="Controls__title__actions">
+            <button
+              className="Controls__tiny-button"
+              onClick={() => dispatch({ type: SET_START_SAVING })}
+            >
+              Save
+            </button>
+            <button
+              className="Controls__tiny-button"
+              onClick={() => dispatch({ type: SET_START_RESETTING })}
+            >
+              Reset
+            </button>
+            <button
+              className="Controls__tiny-button"
+              onClick={() => (document as any).getElementById('importFileInput').click()}
+            >
+              Import
+            </button>
+            <input
+              type="file"
+              id="importFileInput"
+              style={{ display: 'none' }}
+              onChange={handleImport}
+              accept=".json"
+            />
+            <button
+              className="Controls__tiny-button"
+              onClick={handlExport}
+            >
+              Export
+            </button>
+          </div>
+        </div>
         <div className="Controls__groups">
           <div className="Controls__groups__map-mode">
             <select onChange={(e) => dispatch({ type: SET_MAP_MODE, payload: e.target.value })}>
@@ -86,27 +121,6 @@ export default function Controls() {
                 End Trajectory
               </button>
             )}
-          </div>
-          <div className="Controls__groups__data">
-            <button onClick={() => dispatch({ type: SET_START_SAVING })}>
-              Save
-            </button>
-            <button onClick={() => dispatch({ type: SET_START_RESETTING })}>
-              Reset
-            </button>
-            <button onClick={() => (document as any).getElementById('importFileInput').click()}>
-              Import
-            </button>
-            <input
-              type="file"
-              id="importFileInput"
-              style={{ display: 'none' }}
-              onChange={handleImport}
-              accept=".json"
-            />
-            <button onClick={handlExport}>
-              Export
-            </button>
           </div>
         </div>
       </div>

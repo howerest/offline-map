@@ -5,10 +5,27 @@
 }
 
 .Controls__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: black;
   color: white;
-  margin: 0;
   padding: 10px;
+}
+
+.Controls__title__text {
+  margin: 0;
+}
+
+.Controls__title__actions {
+  display: flex;
+  align-items: center;
+}
+
+.Controls__title__actions .Controls__tiny-button {
+  padding: 2px 8px;
+  font-size: 10px;
+  margin: 0 2px;
 }
 
 .Controls__groups {
@@ -45,17 +62,3 @@
   color: white;
 }
 
-.Controls__groups__data {
-  display: flex;
-}
-
-.Controls__groups__data button {
-  background: #828282;
-  border: none;
-  flex: 1;
-  margin: 8px;
-}
-
-.Controls__groups__data button:hover {
-  background: black;
-}
