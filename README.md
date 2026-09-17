@@ -18,10 +18,10 @@ Map has 3 modes:
 * [x] Be able to reset the state of points and trajectories
 * [x] Be able to add a note to a single point
 * [x] Be able to add a note to a trajectory
-* [ ] Be able to select a point
-* [ ] Be able to remove a point
-* [ ] Be able to select a trajectory
-* [ ] Be able to remove a trajectory
+* [x] Be able to select a point
+* [x] Be able to remove a point
+* [x] Be able to select a trajectory
+* [x] Be able to remove a trajectory
 * [ ] Be able to select a point in a trajectory
 * [x] Be able to set a name for a trajectory
 * [x] Be able to set a name for a single point

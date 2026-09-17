@@ -26,6 +26,8 @@ export interface IAppState {
   trajectories: TTrajectory[];
   selectedTrajectory: number | null;
   selectedTrajectoryPoint: number | null;
+  viewedTrajectory: number | null;
+  selectionSeq: number;
   loading: boolean;
   saving: boolean;
   exporting: boolean;
@@ -41,6 +43,8 @@ const initialState:IAppState = {
   trajectories: JSON.parse(localStorage.getItem('trajectories') || "\[\]"),
   selectedTrajectory: null,
   selectedTrajectoryPoint: null,
+  viewedTrajectory: null,
+  selectionSeq: 0,
   loading: true,
   saving: false,
   exporting: false,

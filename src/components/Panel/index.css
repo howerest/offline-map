@@ -93,3 +93,58 @@
   resize: vertical;
   min-height: 40px;
 }
+
+.Panel__trajectories__trajectory__name,
+.Panel__points__point__name {
+  font-weight: 600;
+  padding: 4px 6px;
+}
+
+.Panel__trajectories__trajectory__note-display,
+.Panel__points__point__note-display {
+  display: block;
+  margin: 10px 0 0;
+  padding: 4px 6px;
+  font-family: monospace;
+  color: #555;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.Panel__card-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.Panel__select-button,
+.Panel__edit-button,
+.Panel__delete-button,
+.Panel__save-button,
+.Panel__cancel-button {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-family: monospace;
+  border-radius: 4px;
+}
+
+.Panel__select-button:hover,
+.Panel__edit-button:hover,
+.Panel__save-button:hover,
+.Panel__cancel-button:hover {
+  background: black;
+  color: white;
+}
+
+.Panel__delete-button:hover {
+  background: darkred;
+  color: white;
+  border-color: darkred;
+}
+
+.Panel__trajectories__trajectory--selected,
+.Panel__points__point--selected {
+  background: #b0eab0;
+  border: 1px solid black;
+}

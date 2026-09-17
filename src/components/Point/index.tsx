@@ -5,14 +5,18 @@ import { useSelector } from "react-redux";
 
 interface IProps {
   point: INamedPoint;
+  selected?: boolean;
 }
 
-export default function Point({ point }: IProps) {
+export default function Point({ point, selected }: IProps) {
   const { pointRadiusMeters } = useSelector((state:IAppState) => state);
   return (
     <Circle
       center={point.point}
-      pathOptions={{ fillColor: 'red' }}
+      pathOptions={{
+        color: selected ? 'darkred' : 'darkblue',
+        fillColor: selected ? 'red' : 'lightblue'
+      }}
       radius={pointRadiusMeters}
     >
       <Popup>

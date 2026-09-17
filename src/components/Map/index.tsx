@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, } from "react-leaflet";
 import Point from "../Point";
 import MapEditor from "../MapEditor";
+import MapViewController from "../MapViewController";
 import Trajectory from "../Trajectory";
 import { useSelector, useDispatch } from 'react-redux';
 import { IAppState, TPoint } from "../../state/intial_state";
@@ -17,7 +18,9 @@ export default function() {
     mapMode,
     mode,
     points,
-    trajectories
+    trajectories,
+    selectedPoint,
+    viewedTrajectory
   } = useSelector((state:IAppState) => state);
   const dispatch = useDispatch();
 
@@ -84,14 +87,16 @@ export default function() {
           }}
         />
 
+        <MapViewController />
+
         <ModeTileLayer />
 
         {points.map((point, i) => (
-          <Point point={point} key={i} />
+          <Point point={point} selected={selectedPoint === i} key={i} />
         ))}
 
         {trajectories.map((trajectory, i) => (
-          <Trajectory trajectory={trajectory} key={i} />
+          <Trajectory trajectory={trajectory} selected={viewedTrajectory === i} key={i} />
         ))}
       </MapContainer>
     </>

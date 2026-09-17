@@ -5,21 +5,23 @@ import { TTrajectory } from "../../state/intial_state";
 
 interface IProps {
   trajectory: TTrajectory;
+  selected?: boolean;
 }
 
-export default function Trajectory({trajectory}: IProps) {
+export default function Trajectory({trajectory, selected}: IProps) {
+  const color = selected ? 'darkred' : 'darkblue';
   return (
     <>
       {trajectory.points.map((point, i) => (
         <React.Fragment key={i}>
-          <Point point={{ name: '', point }} />
+          <Point point={{ name: '', point }} selected={selected} />
           {i !== 0 && (
             <Polyline
               positions={[
                 [trajectory.points[i][0], trajectory.points[i][1]],
                 [trajectory.points[i-1][0], trajectory.points[i-1][1]]
               ]}
-              color={trajectory.color}
+              pathOptions={{ color }}
               smoothFactor={3}
             />
           )}

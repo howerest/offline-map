@@ -4,10 +4,15 @@ import {
   SET_MODE,
   SET_POINT_RADIUS,
   ADD_SINGLE_POINT,
+  DELETE_SINGLE_POINT,
   SET_SINGLE_POINT_NAME,
   SET_SINGLE_POINT_NOTE,
+  SELECT_SINGLE_POINT,
+  CLEAR_SELECTION,
+  DELETE_TRAJECTORY,
   SELECT_TRAJECTORY,
   SELECT_TRAJECTORY_POINT,
+  VIEW_TRAJECTORY,
   ADD_POINT_TO_TRAJECTORY,
   SET_TRAJECTORY_NAME,
   SET_TRAJECTORY_NOTES,
@@ -45,14 +50,24 @@ export function appReducer(state:IAppState = initialState, action:any) {
       return setAddSinglePointReducer(state, action);
     case SET_SINGLE_POINT_NAME:
       return setSinglePointName(state, action);
+    case DELETE_SINGLE_POINT:
+      return deleteSinglePointReducer(state, action);
     case SET_SINGLE_POINT_NOTE:
       return setSinglePointNoteReducer(state, action);
+    case SELECT_SINGLE_POINT:
+      return selectSinglePointReducer(state, action);
+    case CLEAR_SELECTION:
+      return clearSelectionReducer(state);
     case SELECT_TRAJECTORY:
       return selectTrajectoryReducer(state, action);
     case SELECT_TRAJECTORY_POINT:
       return selectTrajectoryPointReducer(state, action);
+    case VIEW_TRAJECTORY:
+      return viewTrajectoryReducer(state, action);
     case ADD_POINT_TO_TRAJECTORY:
       return addPointToTrajectoryReducer(state, action);
+    case DELETE_TRAJECTORY:
+      return deleteTrajectoryReducer(state, action);
     case SET_TRAJECTORY_NAME:
       return setTrajectoryName(state, action);
     case SET_TRAJECTORY_NOTES:
@@ -138,6 +153,25 @@ function setAddSinglePointReducer(state:IAppState, { payload: {...point} }:IActi
   return newState;
 }
 
+// re-maps an index affected by the removal of the item at removedIndex
+function reindexAfterRemoval(index: number | null, removedIndex: number): number | null {
+  if (index === null) return null;
+  if (index === removedIndex) return null;
+  if (index > removedIndex) return index - 1;
+  return index;
+}
+
+// DELETE_SINGLE_POINT
+function deleteSinglePointReducer(state:IAppState, { payload: index }:IAction<number>): IAppState {
+  const newPoints = [...state.points];
+  newPoints.splice(index, 1);
+  return {
+    ...state,
+    points: newPoints,
+    selectedPoint: reindexAfterRemoval(state.selectedPoint, index)
+  };
+}
+
 // SET_SINGLE_POINT_NAME
 function setSinglePointName(state:IAppState, { payload: { index, name } }:IAction<{ index: number; name: string}>): IAppState {
   let newPoints = [...state.points];
@@ -157,6 +191,38 @@ function setSinglePointNoteReducer(state:IAppState, { payload: { index, note } }
     points: newPoints
   };
 };
+
+// SELECT_SINGLE_POINT
+function selectSinglePointReducer(state:IAppState, { payload: pointIndex }:IAction<number>): IAppState {
+  return {
+    ...state,
+    selectedPoint: pointIndex,
+    viewedTrajectory: null,
+    selectionSeq: state.selectionSeq + 1
+  };
+}
+
+// CLEAR_SELECTION
+function clearSelectionReducer(state:IAppState): IAppState {
+  if (state.selectedPoint === null && state.viewedTrajectory === null) {
+    return state;
+  }
+  return {
+    ...state,
+    selectedPoint: null,
+    viewedTrajectory: null
+  };
+}
+
+// VIEW_TRAJECTORY
+function viewTrajectoryReducer(state:IAppState, { payload: trajectoryIndex }:IAction<number>): IAppState {
+  return {
+    ...state,
+    viewedTrajectory: trajectoryIndex,
+    selectedPoint: null,
+    selectionSeq: state.selectionSeq + 1
+  };
+}
 
 // SELECT_TRAJECTORY
 function selectTrajectoryReducer(state:IAppState, { payload: trajectoryIndex }:IAction<number>): IAppState {
@@ -181,6 +247,18 @@ function addPointToTrajectoryReducer(state:IAppState, { payload: point }:IAction
   return {
     ...state,
     trajectories: newTrajectories
+  };
+}
+
+// DELETE_TRAJECTORY
+function deleteTrajectoryReducer(state:IAppState, { payload: index }:IAction<number>): IAppState {
+  const newTrajectories = [...state.trajectories];
+  newTrajectories.splice(index, 1);
+  return {
+    ...state,
+    trajectories: newTrajectories,
+    viewedTrajectory: reindexAfterRemoval(state.viewedTrajectory, index),
+    selectedTrajectory: reindexAfterRemoval(state.selectedTrajectory, index)
   };
 }
 
